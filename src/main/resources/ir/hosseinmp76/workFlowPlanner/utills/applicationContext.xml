@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+          http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- bean definitions here -->
+	<context:component-scan
+		base-package=" ir.hosseinmp76.workFlowPlanner.ui,
+		 ir.hosseinmp76.workFlowPlanner.persistency ,
+		  ir.hosseinmp76.workFlowPlanner.logic" />
+
+	<context:annotation-config />
+	<!-- <property name="maxResults" value="${results.max}" /> -->
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="src/main/resources/ir/hosseinmp76/workFlowPlanner/application.properties" />
+	</bean>
+	<import resource="Hibernate.xml" />
+	<import resource="Core.xml" />
+	<import resource="Standalone.xml" />
+
+
+
+
+</beans>

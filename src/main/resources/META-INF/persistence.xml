@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="WorkFlowPlanner"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+
+		<class>ir.hosseinmp76.workFlowPlanner.model.Property</class>
+		<class>ir.hosseinmp76.workFlowPlanner.model.Priority</class>
+		<class>ir.hosseinmp76.workFlowPlanner.model.PropertyPriority</class>
+
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+		<properties>
+			<!-- Scan for annotated classes and Hibernate mapping XML files -->
+
+			<property name="hibernate.archive.autodetection"
+				value="class, hbm" />
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.PostgreSQLDialect" />
+			<!-- <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/heartstone" 
+				/> -->
+			<!-- <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" 
+				/> -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.flushMode" value="FLUSH_AUTO" />
+
+			<!-- <property name="hibernate.connection.password" value="pass" /> <property 
+				name="hibernate.connection.username" value="querydsl" /> -->
+			<property name="hibernate.default_schema"
+				value="heartstonedb" />
+			<property
+				name="hibernate.session.events.log.LOG_QUERIES_SLOWER_THAN_MS"
+				value="25" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://localhost:5432/heartstonedb" />
+			<property name="javax.persistence.jdbc.user"
+				value="heartstonedbuser" />
+			<property name="javax.persistence.jdbc.password"
+				value="heartstonedbuser" />
+			<property name="javax.persistence.jdbc.driver"
+				value="org.postgresql.Driver" />
+
+			<property
+				name="javax.persistence.schema-generation.scripts.action"
+				value="drop-and-create" />
+			<property
+				name="javax.persistence.schema-generation.scripts.create-target"
+				value="./src/main/resources/db/sql/create.sql" />
+			<property
+				name="javax.persistence.schema-generation.scripts.drop-target"
+				value="./src/main/resources/db/sql/drop.sql" />
+
+			<property
+				name="javax.persistence.schema-generation.create-database-schemas"
+				value="true" />
+			<property name="hibernate.connection.provider_class"
+				value="org.hibernate.hikaricp.internal.HikariCPConnectionProvider" />
+			<property name="hibernate.hikari.minimumIdle" value="5" />
+			<property name="hibernate.hikari.idleTimeout" value="30000" />
+			<property name="hibernate.hikari.maximumPoolSize" value="10" />
+			<!-- <property name="hibernate.hikari.dataSourceClassName" value="org.postgresql.ds.PGSimpleDataSource" 
+				/> -->
+			<property name="hibernate.hikari.dataSource.url"
+				value="jdbc:postgresql://localhost:5432/heartstonedb" />
+			<property name="hibernate.hikari.dataSource.user"
+				value="heartstonedbuser" />
+			<property name="hibernate.hikari.dataSource.password"
+				value="heartstonedbuser" />
+
+		</properties>
+	</persistence-unit>
+</persistence>
