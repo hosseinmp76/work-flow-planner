@@ -210,8 +210,16 @@ jlink {
   launcher{
 	name = 'hello'
 	jvmArgs = [
-	  '-Dlog4j.debug=true', '-Dlog4j.configurationFile={{BIN_DIR}}/log4j2.xml'
-	]
+	  '-Dlog4j.debug=true',
+    '-Dlog4j.configurationFile={{BIN_DIR}}/log4j2.xml',
+    '--add-opens', 'java.base/java.lang=WorkFlowPlanner.merged.module',
+    '--add-opens', 'java.base/java.io=WorkFlowPlanner.merged.module',
+    '-cp', '{{BIN_DIR}}/config/',
+    '-Dspring.datasource.schema=file:config/db/hsqldb/schema.sql',
+    '-Dspring.datasource.data=file:config/db/hsqldb/data.sql',
+    '-Dspring.jpa.hibernate.ddl-auto=none',
+    '-Dspring.messages.basename=messages/messages',
+  	]
   }
   addExtraDependencies("javafx")
 
@@ -243,27 +251,25 @@ mergedModule {
   //      jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=*:5005'
 //    }
 tasks.jlink.doLast {
-    copy {
-        from('src/main/resources')
-        into("$buildDir/image/hello-linux/bin")
-    }
-    
-    copy {
-        from('src/main/resources')
-        into("$buildDir/image/hello-linux/bin/src/main/resources")
-    }
-    // Spring performs its magic by scanning the classpath, but in a modular application the classpath is replaced by the module-path.
-    // To circumvent this problem, we copy all resources into the 'config' directory and set this directory as classpath.
-    copy {
-        from "src/main/resources"
-        into "$imageDir.asFile/hello-linux/bin/config"
-    }
+    ['linux', 'win'].each { platform ->
+        def binDir = "$buildDir/image/hello-$platform/bin"
+        copy {
+            from('src/main/resources')
+            into("$binDir/src/main/resources")
+        }
+        // Spring performs its magic by scanning the classpath, but in a modular application the classpath is replaced by the module-path.
+        // To circumvent this problem, we copy all resources into the 'config' directory and set this directory as classpath.
+        copy {
+            from "src/main/resources"
+            into "$binDir/config"
+        }
 
-    // Spring also needs to read the .class files, therefore they should be accessible via classpath.
-    // Note: These .class files are only used as resources, they will not be loaded by a classloader.
-    copy {
-        from "$buildDir/classes/java/main/ir/hosseinmp79/workFlowPlanner"
-        into "$imageDir.asFile/hello-linux/bin/config/ir/hosseinmp79/workFlowPlanner/for-spring-classpath-scanner"
+        // Spring also needs to read the .class files, therefore they should be accessible via classpath.
+        // Note: These .class files are only used as resources, they will not be loaded by a classloader.
+        copy {
+            from "$buildDir/classes/java/main"
+            into "$binDir/config"
+        }
     }
 }
 
