@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ir.hosseinmp76.workFlowPlanner.logic.PropertyPriorityMgr;
 import ir.hosseinmp76.workFlowPlanner.model.PropertySet;
@@ -85,22 +85,22 @@ public class UIUtills {
 	return UIUtills.getContext().getBean(c);
     }
 
-    final static String str = "src/main/resources/ir/hosseinmp76/workFlowPlanner/utills/applicationContext.xml";
+    final static String str = "ir/hosseinmp76/workFlowPlanner/utills/applicationContext.xml";
 
     private static ApplicationContext applicationContext;
 
-    public static ApplicationContext getContext() {
+	public static ApplicationContext getContext() {
 //	var xx = ClassLoader.getSystemResource("config.yml");
-	if (applicationContext != null)
-	    return applicationContext;
-	else {
-	    synchronized (UIUtills.class) {
-		applicationContext = new FileSystemXmlApplicationContext(str);
-	    }
-	}
-	return applicationContext;
+		if (applicationContext != null)
+			return applicationContext;
+		else {
+			synchronized (UIUtills.class) {
+				applicationContext = new ClassPathXmlApplicationContext(str);
+			}
+		}
+		return applicationContext;
 
-    }
+	}
 
     public static <T, V extends TreeItem<T>> List<V> getLeaves(final V item) {
 	final var leaves = new ArrayList<V>();

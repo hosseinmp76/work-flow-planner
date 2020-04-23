@@ -211,7 +211,7 @@ jlink {
 	name = 'hello'
 	jvmArgs = [
 	  '-Dlog4j.debug=true',
-    '-Dlog4j.configurationFile={{BIN_DIR}}/log4j2.xml',
+    '-Dlog4j.configurationFile={{BIN_DIR}}/config/log4j2.xml',
     '--add-opens', 'java.base/java.lang=WorkFlowPlanner.merged.module',
     '--add-opens', 'java.base/java.io=WorkFlowPlanner.merged.module',
     '-cp', '{{BIN_DIR}}/config/',
@@ -253,10 +253,6 @@ mergedModule {
 tasks.jlink.doLast {
     ['linux', 'win'].each { platform ->
         def binDir = "$buildDir/image/hello-$platform/bin"
-        copy {
-            from('src/main/resources')
-            into("$binDir/src/main/resources")
-        }
         // Spring performs its magic by scanning the classpath, but in a modular application the classpath is replaced by the module-path.
         // To circumvent this problem, we copy all resources into the 'config' directory and set this directory as classpath.
         copy {
