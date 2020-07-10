@@ -5,10 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 import ir.hosseinmp76.workFlowPlanner.logic.PropertyPriorityMgr;
 import ir.hosseinmp76.workFlowPlanner.model.PropertySet;
@@ -82,25 +81,27 @@ public class UIUtills {
     }
 
     public static <T> T getBean(final Class<T> c) {
-	return UIUtills.getContext().getBean(c);
+	return UIUtills.getContext().getInstance(c);
     }
 
     final static String str = "ir/hosseinmp76/workFlowPlanner/utills/applicationContext.xml";
 
-    private static ApplicationContext applicationContext;
+    private static Injector applicationContext;
 
-	public static ApplicationContext getContext() {
-//	var xx = ClassLoader.getSystemResource("config.yml");
-		if (applicationContext != null)
-			return applicationContext;
-		else {
-			synchronized (UIUtills.class) {
-				applicationContext = new ClassPathXmlApplicationContext(str);
-			}
-		}
-		return applicationContext;
+    public static Injector getContext() {
 
+//	    container.close();
+	if (applicationContext != null)
+	    return applicationContext;
+	else {
+	    synchronized (UIUtills.class) {
+		applicationContext = Guice.createInjector(new BasicModule());
+		    
+	    }
 	}
+	return applicationContext;
+
+    }
 
     public static <T, V extends TreeItem<T>> List<V> getLeaves(final V item) {
 	final var leaves = new ArrayList<V>();
@@ -116,22 +117,19 @@ public class UIUtills {
 
     public static void printAllBeans() {
 	final var con = UIUtills.getContext();
-	Arrays.stream(con.getBeanDefinitionNames()).forEach(x -> {
-	    Object clazz = null;
-	    try {
-		clazz = con.getBean(x);
-	    } catch (final Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	    System.out.println(x + " " + clazz.getClass());
-	});
-
+	/*
+	 * Arrays.stream(con.getBeanDefinitionNames()).forEach(x -> { Object
+	 * clazz = null; try { clazz = con.getBean(x); } catch (final Exception
+	 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
+	 * System.out.println(x + " " + clazz.getClass()); });
+	 */
     }
 
-    public static void registerBean(final Object bean) {
-	final ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) UIUtills
-		.getContext()).getBeanFactory();
-	beanFactory.registerSingleton(bean.getClass().getCanonicalName(), bean);
+}
+
+ class BasicModule extends AbstractModule {
+    
+    @Override
+    protected void configure() {
     }
 }

@@ -3,6 +3,7 @@ package ir.hosseinmp76.workFlowPlanner.ui;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import fr.brouillard.oss.cssfx.CSSFX;
 import ir.hosseinmp76.workFlowPlanner.utills.UIUtills;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ public class FXApp extends Application {
 
     public static void main(final String[] args) {
 	UIUtills.getContext();
+	CSSFX.start();
 	Application.launch(args);
     }
 
@@ -28,7 +30,7 @@ public class FXApp extends Application {
 	Font.loadFont(this.getClass().getResource("HM_XNiloofar.ttf").toExternalForm(),
 		14);
 
-	stage.initStyle(StageStyle.UNIFIED);
+//	stage.initStyle(StageStyle.UNIFIED);
 
 	
 	final Locale locale = new Locale("fa", "IR");

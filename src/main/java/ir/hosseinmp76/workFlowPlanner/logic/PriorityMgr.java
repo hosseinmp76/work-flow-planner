@@ -1,16 +1,17 @@
 package ir.hosseinmp76.workFlowPlanner.logic;
 
+
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Component;
+import com.google.inject.Singleton;
 
 import ir.hosseinmp76.workFlowPlanner.model.Priority;
 import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.persistency.BasicDAO;
 import ir.hosseinmp76.workFlowPlanner.persistency.PriorityDAO;
 import ir.hosseinmp76.workFlowPlanner.persistency.PropertyDAO;
+@Singleton
 
-@Component
 public class PriorityMgr implements BasicMgr<Priority> {
 
     @Inject

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
+import com.google.inject.Singleton;
 
 import ir.hosseinmp76.workFlowPlanner.exception.MyRuntimeException;
 import ir.hosseinmp76.workFlowPlanner.model.BaseModel;
@@ -12,7 +12,7 @@ import ir.hosseinmp76.workFlowPlanner.model.Priority;
 import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.model.PropertyPriority;
 
-@Component
+@Singleton
 public class PropertyPriorityDAO extends BasicInMemoryDAO<PropertyPriority> {
     List<PropertyPriority> propertyPriorities = new ArrayList<>();
 

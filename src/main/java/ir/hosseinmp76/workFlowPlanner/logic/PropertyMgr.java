@@ -2,13 +2,14 @@ package ir.hosseinmp76.workFlowPlanner.logic;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Component;
+import com.google.inject.Singleton;
 
 import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.persistency.BasicDAO;
 import ir.hosseinmp76.workFlowPlanner.persistency.PropertyDAO;
 
-@Component
+@Singleton
+
 public class PropertyMgr implements BasicMgr<Property> {
 
     @Inject

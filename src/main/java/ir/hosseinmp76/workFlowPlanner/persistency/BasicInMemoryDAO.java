@@ -2,7 +2,6 @@ package ir.hosseinmp76.workFlowPlanner.persistency;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import ir.hosseinmp76.workFlowPlanner.model.BaseModel;
 

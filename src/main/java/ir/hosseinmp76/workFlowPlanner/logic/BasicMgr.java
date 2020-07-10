@@ -2,10 +2,10 @@ package ir.hosseinmp76.workFlowPlanner.logic;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import ir.hosseinmp76.workFlowPlanner.model.BaseModel;
 import ir.hosseinmp76.workFlowPlanner.persistency.BasicDAO;
+
 
 public interface BasicMgr<T extends BaseModel> {
 

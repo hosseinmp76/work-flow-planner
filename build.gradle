@@ -12,20 +12,24 @@ plugins {
 //  id 'war'
   id 'application'
     id 'java-library'
-     id 'org.openjfx.javafxplugin' version '0.0.8'
+//     id 'org.openjfx.javafxplugin' version '0.0.8'
+  id "org.javamodularity.moduleplugin" version "1.6.0"
   id 'org.beryx.jlink' version '2.17.7'
   id 'project-report'
     id 'net.nemerosa.versioning' version '2.6.1' 
      id "io.spring.dependency-management" version "1.0.6.RELEASE"
+       id "dev.jacomet.logging-capabilities" version "0.9.0"
+     
 }
 
-def springVersion = '5.2.3.RELEASE'
+
 
 java {
   sourceCompatibility = JavaVersion.VERSION_14
   targetCompatibility = JavaVersion.VERSION_14
+  modularity.inferModulePath = true
 }
-
+/*
 javafx {
   version = "14"
   modules = [
@@ -34,6 +38,7 @@ javafx {
 	'javafx.swing'
   ]
 }
+*/
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -43,42 +48,36 @@ repositories {
   mavenCentral()
 }
 
+String javaFxVersion = '14'
+String mod = 'linux'
+
 dependencies {
-
-
-//implementation 'com.gluonhq:ignite-spring:1.0.2'
+ 	compile "fr.brouillard.oss:cssfx:11.3.0"
+    
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: mod
+    implementation group: 'org.openjfx', name: 'javafx-swing', version: javaFxVersion, classifier: mod
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: mod
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: mod
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: mod
+    implementation group: 'org.openjfx', name: 'javafx-media', version: javaFxVersion, classifier: mod
+    implementation group: 'org.openjfx', name: 'javafx-web', version: javaFxVersion, classifier: mod
 
   // https://mvnrepository.com/artifact/javax.inject/javax.inject
   implementation group: 'javax.inject', name: 'javax.inject', version: '1'
 
-  // https://mvnrepository.com/artifact/org.springframework/spring-beans
-  implementation (group: 'org.springframework', name: 'spring-beans', version: springVersion)
 
-  configurations.compile.exclude(group: 'org.springframework', module: 'spring-jcl')
-  // https://mvnrepository.com/artifact/org.springframework/spring-context
-  implementation group: 'org.springframework', name: 'spring-context', version: springVersion
-  // https://mvnrepository.com/artifact/org.springframework/spring-core
-  implementation group: 'org.springframework', name: 'spring-core', version: springVersion
-  
 compileOnly 'org.projectlombok:lombok:1.18.12'
   annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
   testCompileOnly 'org.projectlombok:lombok:1.18.12'
   testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
-  // This dependency is exported to consumers, that is to say found on their implementation classpath.
-  api 'org.apache.commons:commons-math3:3.6.1'
-
 // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
 implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
 
 
-  // This dependency is used internally, and not exposed to consumers on their own implementation classpath.
-  implementation 'com.google.guava:guava:28.2-jre'
-  configurations.compile.exclude(group: 'com.google.code.findbugs', module: 'jsr305')
-
   // https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
-  implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+ // implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
 
   // Use JUnit test framework
   testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
@@ -91,19 +90,6 @@ implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
 //implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '3.0.0-M1'
 implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.4.0-b180830.0438'
 
-// https://mvnrepository.com/artifact/commons-logging/commons-logging
-implementation group: 'commons-logging', name: 'commons-logging', version: '1.2'
-
- implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.1'
-  implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.1'
-  /*
-  // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jcl
-  implementation group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.13.1'
-  // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j18-impl
-  implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j18-impl', version: '2.13.1'
-  // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-  implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
-*/
 
   // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
   implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.2.Final'
@@ -141,6 +127,7 @@ implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', versio
 implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.3'
 
 
+ // configurations.compile.exclude(group: 'org.jboss.spec.javax.el', module: 'jboss-el-api_3.0_spec')
   // https://mvnrepository.com/artifact/org.glassfish/javax.el
   implementation group: 'org.glassfish', name: 'javax.el', version: '3.0.0'
 
@@ -152,9 +139,6 @@ application {
 }
 
 mainClassName = 'ir.hosseinmp76.workFlowPlanner/ir.hosseinmp76.workFlowPlanner.ui.FXApp'
-java {
-    modularity.inferModulePath = true
-}
 
 
 eclipse {
@@ -170,9 +154,7 @@ eclipse {
 }
 
 run {
-
   standardInput = System.in
-
 }
 
 jar {
@@ -186,11 +168,20 @@ jar {
 			  'Created-By'     : "Gradle ${gradle.gradleVersion}",
 			  'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
 			  'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
-  
 	  )
   }
 }
 
+sourceSets {
+    main {
+        java {
+            resources {
+                srcDir("src/main/resources")
+                include("**/*.*")
+            }
+        }
+    }
+}
 jlink {
   options = [
 	'--strip-debug',
@@ -202,10 +193,16 @@ jlink {
 
 	targetPlatform("linux") {
         jdkHome = "/usr/lib/jvm/jdk-14"
+        
     }
 
     targetPlatform("win") {
-        jdkHome = "/usr/lib/jvm/jdk-14-win"
+        jdkHome = "/usr2/lib/jvm/jdk-14-win"
+        addExtraModulePath("/usr/lib/jvm/jmods/javafx-win-jmods-14.0.1")
+    }
+    targetPlatform("mac") {
+//        jdkHome = "/usr2/lib/jvm/jdk-14-win"
+        addExtraModulePath("/usr/lib/jvm/jmods/javafx-osx-jmods-14.0.1")
     }
   launcher{
 	name = 'hello'
@@ -234,7 +231,21 @@ mergedModule {
 	excludeRequires 'com.fasterxml.jackson.module.paramnames'
 	excludeProvides implementation: 'com.sun.xml.bind.v2.ContextFactory'
     excludeProvides servicePattern: 'javax.enterprise.inject.*'
-    excludeProvides service: 'org.apache.logging.log4j.spi.Provider'      
+    excludeProvides service: 'org.apache.logging.log4j.spi.Provider' 
+    uses 'org.hibernate.integrator.spi.Integrator'
+		uses 'org.hibernate.service.spi.ServiceContributor'
+		
+		uses 'org.hibernate.boot.registry.selector.StrategyRegistrationProvider'
+		uses 'org.hibernate.boot.spi.MetadataSourcesContributor'
+		uses 'org.hibernate.boot.spi.MetadataBuilderInitializer'
+		uses 'org.hibernate.boot.spi.MetadataBuilderFactory'
+		uses 'org.hibernate.boot.model.TypeContributor'
+		uses 'org.hibernate.boot.spi.MetadataContributor'
+		uses 'org.hibernate.boot.spi.AdditionalJaxbMappingProducer'
+		uses 'org.hibernate.boot.spi.SessionFactoryBuilderFactory'
+		uses 'org.hibernate.service.spi.SessionFactoryServiceContributor'
+ 
+	     
 	}
 	jpackage {
 		imageName = 'HelloFX'
@@ -254,7 +265,7 @@ run {
     jvmArgs '-cp', 'src/main/resources'
 }
 tasks.jlink.doLast {
-    ['linux', 'win'].each { platform ->
+    ['linux', 'win', 'mac'].each { platform ->
         def binDir = "$buildDir/image/hello-$platform/bin"
         // Spring performs its magic by scanning the classpath, but in a modular application the classpath is replaced by the module-path.
         // To circumvent this problem, we copy all resources into the 'config' directory and set this directory as classpath.

@@ -3,11 +3,13 @@ package ir.hosseinmp76.workFlowPlanner.persistency;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+
+import com.google.inject.Singleton;
 
 import ir.hosseinmp76.workFlowPlanner.model.Property;
 
-@Component
+@Singleton
+
 public class PropertyDAO extends BasicInMemoryDAO<Property> {
 
     private final List<Property> properties = new ArrayList<>();

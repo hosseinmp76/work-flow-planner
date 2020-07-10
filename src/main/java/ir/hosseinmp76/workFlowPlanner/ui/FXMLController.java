@@ -75,10 +75,13 @@ public class FXMLController {
     @FXML
     public void addButt(final Event e) {
 
-	System.out.println("ddf");
+	if (this.name.getText().isBlank()) {
+	    throw new RuntimeException("name field is empty");
+	}
 	final var item = new MyTreeItem(this.propertyMgr.create(
 		this.name.getText(), this.getSelectedProperty().getValue()));
 	this.getSelectedProperty().getChildren().add(item);
+	this.name.setText("");
 
     }
 
@@ -88,10 +91,14 @@ public class FXMLController {
 	if (selected == null) {
 	    throw new MyRuntimeException();
 	}
+	if (this.priorityName.getText().isBlank()) {
+	    throw new RuntimeException("name field is empty");
+	}
+
 	this.priorityMgr.create(this.priorityName.getText(),
 		selected.getValue());
+	this.priorityName.setText("");
 	this.updateComboBox();
-
     }
 
     @FXML
