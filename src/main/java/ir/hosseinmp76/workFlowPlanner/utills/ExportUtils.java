@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import ir.hosseinmp76.workFlowPlanner.model.PropertySet;
+import ir.hosseinmp76.workFlowPlanner.ui.PropertySet;
 
 public class ExportUtils {
 

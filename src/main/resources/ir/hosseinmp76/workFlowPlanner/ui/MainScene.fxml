@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -21,139 +14,49 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ir.hosseinmp76.workFlowPlanner.ui.FXMLController">
+<VBox fx:id="mainBox" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ir.hosseinmp76.workFlowPlanner.ui.FXMLController">
 	<children>
 		<MenuBar VBox.vgrow="NEVER">
 			<menus>
-				<Menu mnemonicParsing="false" text="File">
+				<Menu mnemonicParsing="false" text="%menu.file">
 					<items>
-						<MenuItem mnemonicParsing="false" text="New" />
-						<MenuItem mnemonicParsing="false" text="Open…" />
-						<Menu mnemonicParsing="false" text="Open Recent" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Close" />
-						<MenuItem mnemonicParsing="false" text="Save" />
-						<MenuItem mnemonicParsing="false" text="Save As…" />
-						<MenuItem mnemonicParsing="false" text="Revert" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Preferences…" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Quit" />
+						<MenuItem fx:id="exportButton" mnemonicParsing="false" onAction="#exportButtonHandler" text="%menu.export" />
+
 					</items>
 				</Menu>
-				<Menu mnemonicParsing="false" text="Edit">
+				<Menu mnemonicParsing="false" text="%menu.help">
 					<items>
-						<MenuItem mnemonicParsing="false" text="Undo" />
-						<MenuItem mnemonicParsing="false" text="Redo" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Cut" />
-						<MenuItem mnemonicParsing="false" text="Copy" />
-						<MenuItem mnemonicParsing="false" text="Paste" />
-						<MenuItem mnemonicParsing="false" text="Delete" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Select All" />
-						<MenuItem mnemonicParsing="false" text="Unselect All" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="Help">
-					<items>
-						<MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+						<MenuItem mnemonicParsing="false" onAction="#aboutMenu" text="%menu.about.text" />
 					</items>
 				</Menu>
 			</menus>
 		</MenuBar>
-		<SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-			<items>
-				<AnchorPane>
-					<children>
-						<SplitPane dividerPositions="0.5, 0.5" orientation="VERTICAL" prefHeight="547.0" prefWidth="221.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-							<items>
-								<AnchorPane>
-									<children>
-										<Label alignment="CENTER" layoutX="29.0" layoutY="14.0" prefHeight="29.0" prefWidth="162.0" style="&#10;" text="%newproperty.label" textAlignment="CENTER" wrapText="false">
-											<font>
-												<Font size="18.0" fx:id="x1" />
-											</font>
-											<textFill>
-												<Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
-											</textFill>
-										</Label>
-										<TextField id="catName" fx:id="name" layoutX="48.0" layoutY="55.0" prefHeight="28.0" prefWidth="150.0" />
-										<Button fx:id="add" layoutX="76.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#addButt" text="%newproperty.button" />
-										<Label layoutX="29.0" layoutY="60.0" text="%newproperty.name.label" />
-									</children>
-								</AnchorPane>
-								<AnchorPane>
-									<children>
-										<TextField fx:id="priorityName" layoutX="51.0" layoutY="47.0" prefHeight="28.0" prefWidth="150.0" />
-										<Button fx:id="addPriority" layoutX="71.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#addPriorityListner" text="%newpriority.button" />
-										<Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="29.0" prefWidth="133.0" text="%newpriority.label" textOverrun="CLIP" />
-										<Label layoutX="25.0" layoutY="43.0" text="%newpriority.name.label" />
-									</children>
-								</AnchorPane>
-								<AnchorPane>
-									<children>
-										<Button fx:id="exportButton" layoutX="70.0" layoutY="138.0" mnemonicParsing="false" onMouseClicked="#exportButtonHandler" text="%export.button" />
-                              <Button layoutX="70.0" layoutY="54.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="82.0" text="%load.button" />
-									</children>
-								</AnchorPane>
-							</items>
-						</SplitPane>
-					</children>
-				</AnchorPane>
-				<TreeView fx:id="tree">
-				</TreeView>
-				<AnchorPane>
-					<children>
-						<SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="554.0" prefWidth="220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-							<items>
-								<BorderPane prefHeight="200.0" prefWidth="200.0">
-									<top>
-										<Label fx:id="detail" alignment="CENTER" style="&#10;" text="%priorityTable.label" textAlignment="CENTER" wrapText="false" BorderPane.alignment="CENTER">
-											<font>
-												<Font size="18.0" fx:id="x5" />
-											</font>
-											<textFill>
-												<Color blue="0.624" green="0.624" red="0.624" fx:id="x6" />
-											</textFill>
-										</Label>
-									</top>
-									<center>
-										<TableView fx:id="table" BorderPane.alignment="CENTER">
-											<placeholder>
-												<Label text="%table.placeholder" />
-											</placeholder>
-											<columns>
-												<TableColumn fx:id="column1" prefWidth="100.0" text="%table.priority" />
-												<TableColumn fx:id="column2" prefWidth="100.0" text="%table.value" />
-											</columns>
-										</TableView>
-									</center>
-								</BorderPane>
-								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-									<children>
-										<VBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-											<children>
-												<ComboBox fx:id="priorities" prefWidth="150.0" />
-												<TextField fx:id="priorityValue" prefHeight="28.0" prefWidth="149.0">
-													<VBox.margin>
-														<Insets left="30.0" right="30.0" />
-													</VBox.margin>
-												</TextField>
-												<Button fx:id="appPrioValue" mnemonicParsing="false" onMouseClicked="#appPrioValueListner" prefHeight="33.0" prefWidth="168.0" text="%addPPValue.button" />
-											</children>
-										</VBox>
-									</children>
-								</AnchorPane>
-							</items>
-						</SplitPane>
-					</children>
-				</AnchorPane>
-			</items>
-		</SplitPane>
-		<HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+		<TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+			<tabs>
+				<Tab closable="false" text="%mainmenu.propertytab">
+					<content>
+						<BorderPane prefHeight="560.0" prefWidth="900.0">
+							<center>
+								<fx:include source="PropertyScene.fxml" />
+
+							</center>
+						</BorderPane>
+					</content>
+				</Tab>
+				<Tab closable="false" text="%mainmenu.prioritytab">
+					<content>
+						<BorderPane prefWidth="200.0" HBox.hgrow="ALWAYS">
+							<center>
+								<fx:include source="PriorityScene.fxml" />
+							</center>
+						</BorderPane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+		<HBox id="HBox" alignment="CENTER_LEFT" fillHeight="false" maxHeight="22.0" minHeight="22.0" prefHeight="22.0" spacing="5.0" VBox.vgrow="NEVER">
 			<children>
-				<Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="%status.left" HBox.hgrow="ALWAYS">
+				<Label maxHeight="22.0" minWidth="22.0" text="%status.left" HBox.hgrow="NEVER">
 					<font>
 						<Font size="11.0" fx:id="x3" />
 					</font>
@@ -161,8 +64,8 @@
 						<Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
 					</textFill>
 				</Label>
-				<Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-				<Label font="$x3" maxWidth="-1.0" text="%status.right" textFill="$x4" HBox.hgrow="NEVER" />
+				<Pane maxHeight="22.0" prefHeight="22.0" HBox.hgrow="ALWAYS" />
+				<Label font="$x3" maxHeight="22.0" minWidth="22.0" prefHeight="22.0" text="%status.right" textFill="$x4" HBox.hgrow="NEVER" />
 			</children>
 			<padding>
 				<Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

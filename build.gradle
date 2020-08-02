@@ -12,12 +12,11 @@ plugins {
 //  id 'war'
   id 'application'
     id 'java-library'
-//     id 'org.openjfx.javafxplugin' version '0.0.8'
-  id "org.javamodularity.moduleplugin" version "1.6.0"
-  id 'org.beryx.jlink' version '2.17.7'
+     id 'org.openjfx.javafxplugin' version '0.0.8'
+//  id "org.javamodularity.moduleplugin" version "1.6.0"
+  id 'org.beryx.jlink' version '2.21.0'
   id 'project-report'
-    id 'net.nemerosa.versioning' version '2.6.1' 
-     id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id 'net.nemerosa.versioning' version '2.6.1'
        id "dev.jacomet.logging-capabilities" version "0.9.0"
      
 }
@@ -27,9 +26,9 @@ plugins {
 java {
   sourceCompatibility = JavaVersion.VERSION_14
   targetCompatibility = JavaVersion.VERSION_14
-  modularity.inferModulePath = true
+  //modularity.inferModulePath = true
 }
-/*
+
 javafx {
   version = "14"
   modules = [
@@ -38,7 +37,7 @@ javafx {
 	'javafx.swing'
   ]
 }
-*/
+
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -52,8 +51,11 @@ String javaFxVersion = '14'
 String mod = 'linux'
 
 dependencies {
- 	compile "fr.brouillard.oss:cssfx:11.3.0"
-    
+// https://mvnrepository.com/artifact/org.hsqldb/hsqldb
+compile group: 'org.hsqldb', name: 'hsqldb', version: '2.5.1'
+
+ 	compile "fr.brouillard.oss:cssfx:11.4.0"
+    /*
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: mod
     implementation group: 'org.openjfx', name: 'javafx-swing', version: javaFxVersion, classifier: mod
     implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: mod
@@ -61,10 +63,18 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: mod
     implementation group: 'org.openjfx', name: 'javafx-media', version: javaFxVersion, classifier: mod
     implementation group: 'org.openjfx', name: 'javafx-web', version: javaFxVersion, classifier: mod
+*/
+// https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.jpa
+implementation group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '3.0.0-M1'
 
-  // https://mvnrepository.com/artifact/javax.inject/javax.inject
-  implementation group: 'javax.inject', name: 'javax.inject', version: '1'
+// https://mvnrepository.com/artifact/jakarta.activation/jakarta.activation-api
+implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.0.0-RC3'
 
+// https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.jpa.modelgen.processor
+annotationProcessor group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa.modelgen.processor', version: '3.0.0-M1'
+
+// https://mvnrepository.com/artifact/jakarta.transaction/jakarta.transaction-api
+compile group: 'jakarta.transaction', name: 'jakarta.transaction-api', version: '2.0.0-RC2'
 
 compileOnly 'org.projectlombok:lombok:1.18.12'
   annotationProcessor 'org.projectlombok:lombok:1.18.12'
@@ -75,83 +85,38 @@ compileOnly 'org.projectlombok:lombok:1.18.12'
 // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
 implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
 
+	// https://mvnrepository.com/artifact/org.jboss.weld.se/weld-se-core
+compile group: 'org.jboss.weld.se', name: 'weld-se-core', version: '4.0.0.Alpha3'
 
-  // https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
- // implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+// https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.jpa
+compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '3.0.0-M1'
 
   // Use JUnit test framework
   testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
-
-  // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-//  implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-// https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl
-//implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.2'
-// https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
-//implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '3.0.0-M1'
-implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.4.0-b180830.0438'
-
-
-  // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
-  implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.2.Final'
-
- // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
-  implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.0.0.Alpha4'
-  // https://mvnrepository.com/artifact/org.postgresql/postgresql
-  implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
-  // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-jcache
-  implementation group: 'org.hibernate.orm', name: 'hibernate-jcache', version: '6.0.0.Alpha4'
-    // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-hikaricp
-  implementation group: 'org.hibernate.orm', name: 'hibernate-hikaricp', version: '6.0.0.Alpha4'
-
-
-
-
-  // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
-  implementation group: 'com.zaxxer', name: 'HikariCP', version: '3.4.2'
   
-  
-  // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
-  implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
-
+ 
  // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx
   implementation group: 'org.kordamp.ikonli', name: 'ikonli-javafx', version: '11.3.5'
   // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-fontawesome5-pack
   implementation group: 'org.kordamp.ikonli', name: 'ikonli-fontawesome5-pack', version: '11.3.5'
 
-
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.3'
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
-implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.3'
-
-
- // configurations.compile.exclude(group: 'org.jboss.spec.javax.el', module: 'jboss-el-api_3.0_spec')
-  // https://mvnrepository.com/artifact/org.glassfish/javax.el
-  implementation group: 'org.glassfish', name: 'javax.el', version: '3.0.0'
-
 }
 
-application {
-    mainModule = 'ir.hosseinmp76.workFlowPlanner' // name defined in module-info.java
-    mainClass = 'ir.hosseinmp76.workFlowPlanner.ui.FXApp'
+ext {
+    metamodelPath="$buildDir/generated/sources/metamodel/java/main"
+    persistenceXMLLocation="src/main/resources/META-INF/persistence.xml"
 }
 
-mainClassName = 'ir.hosseinmp76.workFlowPlanner/ir.hosseinmp76.workFlowPlanner.ui.FXApp'
-
-
-eclipse {
-  classpath {
-	file {
-	  whenMerged {
-		entries.findAll { it.properties.kind.equals('lib') }.each {
-		  it.entryAttributes['module'] = 'true'
-		}
-	  }
-	}
-  }
+compileJava {
+    doFirst {
+        file(metamodelPath).delete()
+        file(metamodelPath).mkdirs()
+    }
+    options.compilerArgs += ["-Aeclipselink.persistencexml=${new File(project.projectDir, persistenceXMLLocation).absolutePath}", '-s', metamodelPath]
 }
+
+mainClassName = 'ir.hosseinmp76.workFlowPlanner.ui.Fuck'
+
 
 run {
   standardInput = System.in
@@ -160,17 +125,30 @@ run {
 jar {
   manifest {
 	  attributes(
-			  'Main-Class': 'ir.hosseinmp76.workFlowPlanner.ui.FXApp',
+			  'Main-Class': 'ir.hosseinmp76.workFlowPlanner.ui.Fuck',
 			  'Built-By'       : System.properties['user.name'],
 			  'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
 			  'Build-Revision' : versioning.info.commit,
-//			  "Implementation-Version": archiveVersion,
 			  'Created-By'     : "Gradle ${gradle.gradleVersion}",
 			  'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
 			  'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
 	  )
   }
 }
+
+task copyResources(type: Copy) {
+    from "${projectDir}/src/main/resources"
+    into "${buildDir}/classes/java/main"
+}
+
+processResources.dependsOn copyResources
+
+task copyResources2(type: Copy) {
+    from "${projectDir}/src/main/resources"
+    into "${projectDir}/bin/java/main"
+}
+
+processResources.dependsOn copyResources2
 
 sourceSets {
     main {
@@ -182,140 +160,13 @@ sourceSets {
         }
     }
 }
-jlink {
-  options = [
-	'--strip-debug',
-	'--compress',
-	'2',
-	'--no-header-files',
-	'--no-man-pages'
-  ]
 
-	targetPlatform("linux") {
-        jdkHome = "/usr/lib/jvm/jdk-14"
-        
-    }
-
-    targetPlatform("win") {
-        jdkHome = "/usr2/lib/jvm/jdk-14-win"
-        addExtraModulePath("/usr/lib/jvm/jmods/javafx-win-jmods-14.0.1")
-    }
-    targetPlatform("mac") {
-//        jdkHome = "/usr2/lib/jvm/jdk-14-win"
-        addExtraModulePath("/usr/lib/jvm/jmods/javafx-osx-jmods-14.0.1")
-    }
-  launcher{
-	name = 'hello'
-	jvmArgs = [
-	  '-Dlog4j.debug=true',
-    '-Dlog4j.configurationFile={{BIN_DIR}}/config/log4j2.xml',
-    '--add-opens', 'java.base/java.lang=WorkFlowPlanner.merged.module',
-    '--add-opens', 'java.base/java.io=WorkFlowPlanner.merged.module',
-    '-cp', '{{BIN_DIR}}/config/',
-    '-Dspring.datasource.schema=file:config/db/hsqldb/schema.sql',
-    '-Dspring.datasource.data=file:config/db/hsqldb/data.sql',
-    '-Dspring.jpa.hibernate.ddl-auto=none',
-    '-Dspring.messages.basename=messages/messages',
-  	]
-  }
-  addExtraDependencies("javafx")
-
-
-//  forceMerge 'istack', 'stax','jackson', 'log4j-api', 'log4j-core', 'spring-contex', 'jaxb-api', 'byte-buddy', 'classgraph'
-	forceMerge 'jackson', 'jaxb-api', 'activation', 'istack', 'stax', 'log4j-api'
-
-mergedModule {
-    additive = true
-//    uses 'javax.validation.valueextraction.ValueExtractor'
-//    uses 'javax.validation.ConstraintValidator'
-	excludeRequires 'com.fasterxml.jackson.module.paramnames'
-	excludeProvides implementation: 'com.sun.xml.bind.v2.ContextFactory'
-    excludeProvides servicePattern: 'javax.enterprise.inject.*'
-    excludeProvides service: 'org.apache.logging.log4j.spi.Provider' 
-    uses 'org.hibernate.integrator.spi.Integrator'
-		uses 'org.hibernate.service.spi.ServiceContributor'
-		
-		uses 'org.hibernate.boot.registry.selector.StrategyRegistrationProvider'
-		uses 'org.hibernate.boot.spi.MetadataSourcesContributor'
-		uses 'org.hibernate.boot.spi.MetadataBuilderInitializer'
-		uses 'org.hibernate.boot.spi.MetadataBuilderFactory'
-		uses 'org.hibernate.boot.model.TypeContributor'
-		uses 'org.hibernate.boot.spi.MetadataContributor'
-		uses 'org.hibernate.boot.spi.AdditionalJaxbMappingProducer'
-		uses 'org.hibernate.boot.spi.SessionFactoryBuilderFactory'
-		uses 'org.hibernate.service.spi.SessionFactoryServiceContributor'
- 
-	     
-	}
-	jpackage {
-		imageName = 'HelloFX'
-		skipInstaller = true
-		targetPlatformName = "linux"
-		installerName = 'HelloFX'
-		installerType = 'deb'
-		targetPlatformName = "linux"
-      }
-
-}
-
- //run {
-  //      jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=*:5005'
-//    }
 run {
     jvmArgs '-cp', 'src/main/resources'
 }
-tasks.jlink.doLast {
-    ['linux', 'win', 'mac'].each { platform ->
-        def binDir = "$buildDir/image/hello-$platform/bin"
-        // Spring performs its magic by scanning the classpath, but in a modular application the classpath is replaced by the module-path.
-        // To circumvent this problem, we copy all resources into the 'config' directory and set this directory as classpath.
-        copy {
-            from "src/main/resources"
-            into "$binDir/config"
-        }
 
-        // Spring also needs to read the .class files, therefore they should be accessible via classpath.
-        // Note: These .class files are only used as resources, they will not be loaded by a classloader.
-        copy {
-            from "$buildDir/classes/java/main"
-            into "$binDir/config"
-        }
-    }
-}
 
-configurations {
-   springFactoriesHolder { transitive = false }
-}
 
-prepareMergedJarsDir.doLast {
-    // extract and merge META-INF/spring.factories from springFactoriesHolder
-    def factories = configurations.springFactoriesHolder.files.collect {
-        def props = new Properties()
-        props.load(zipTree(it).matching { include 'META-INF/spring.factories' }.singleFile.newInputStream())
-        props
-    }
-    def mergedProps = new Properties()
-    factories.each { props ->
-        props.each { key, value ->
-            def oldVal = mergedProps[key]
-            mergedProps[key] = oldVal ? "$oldVal,$value" : value
-        }
-    }
-    def content = mergedProps.collect { key, value ->
-        def v = (value as String).replace(',', ',\\\n')
-        "$key=$v"
-    }.join('\n\n')
-    mkdir("$jlinkBasePath/META-INF")
-    new File("$jlinkBasePath/META-INF/spring.factories").text = content
-
-    // insert META-INF/spring.factories into the main jar
-    ant.zip(update: "true", destfile: jar.archivePath, keepcompression: true) {
-        fileset(dir: "$jlinkBasePath", includes: 'META-INF/**')
-    }
-}
-processResources {
-    from('resources') {into 'resources'}
-}
 
 test {
   useJUnitPlatform()

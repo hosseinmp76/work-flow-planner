@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Priority implements BaseModel {
+public class Formula implements BaseModel {
     /**
      *
      */
@@ -24,13 +24,18 @@ public class Priority implements BaseModel {
     @Column(unique = true)
     private String name;
 
-    public Priority() {
-	// TODO Auto-generated constructor stub
+    Map<Priority, Long> coefficients = new HashMap<>();
+
+    public Formula() {
     }
 
-    public Priority(final Long id2) {
-	this.id = id2;
+    public Formula(final Long id) {
+	this.id = id;
     }
 
+    @Override
+    public String toString() {
+	return this.name + " : ";
 
+    }
 }

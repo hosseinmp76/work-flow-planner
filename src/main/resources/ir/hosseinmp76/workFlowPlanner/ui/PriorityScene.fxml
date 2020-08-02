@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+
+<SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ir.hosseinmp76.workFlowPlanner.ui.PriorityController">
+	<items>
+		<AnchorPane>
+			<children>
+				<SplitPane orientation="VERTICAL" prefHeight="547.0" prefWidth="221.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<items>
+						<AnchorPane>
+							<children>
+								<Label alignment="CENTER" layoutX="29.0" layoutY="14.0" prefHeight="29.0" prefWidth="162.0" style="&#10;" text="%newpriority.label" textAlignment="CENTER" wrapText="false">
+
+									<textFill>
+										<Color blue="0.624" green="0.624" red="0.624" />
+									</textFill>
+								</Label>
+								<TextField id="catName" fx:id="newPriorityName" layoutX="48.0" layoutY="55.0" prefHeight="28.0" prefWidth="150.0" />
+								<Button layoutX="76.0" layoutY="115.0" mnemonicParsing="false" onAction="#addPriority" text="%newproperty.button" />
+								<Label layoutX="29.0" layoutY="60.0" text="%newproperty.name.label" />
+								<Button layoutX="69.0" layoutY="348.0" mnemonicParsing="false" onAction="#newFormula" text="add formul" />
+                        <Button layoutX="82.0" layoutY="449.0" mnemonicParsing="false" onAction="#removeFormula" text="remove formula" />
+                        <ComboBox fx:id="removeFormulaCombo" layoutX="48.0" layoutY="396.0" prefWidth="150.0" />
+                        <ComboBox fx:id="removePriorityConboBox" layoutX="72.0" layoutY="192.0" prefWidth="150.0" />
+                        <Button layoutX="117.0" layoutY="245.0" mnemonicParsing="false" onAction="#removePriority" text="remove priority" />
+                        <TextField fx:id="newFormulaName" layoutX="60.0" layoutY="305.0" />
+							</children>
+						</AnchorPane>
+					</items>
+				</SplitPane>
+			</children>
+		</AnchorPane>
+		<TableView fx:id="priorityTable" editable="true" />
+	</items>
+</SplitPane>

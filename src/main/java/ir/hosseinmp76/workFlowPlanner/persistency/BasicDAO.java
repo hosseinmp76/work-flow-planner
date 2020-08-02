@@ -3,17 +3,23 @@ package ir.hosseinmp76.workFlowPlanner.persistency;
 import java.util.List;
 
 import ir.hosseinmp76.workFlowPlanner.model.BaseModel;
+import ir.hosseinmp76.workFlowPlanner.model.Formula;
+import ir.hosseinmp76.workFlowPlanner.model.Priority;
+import ir.hosseinmp76.workFlowPlanner.model.Property;
 
 public interface BasicDAO<T extends BaseModel> {
-
-    public T createEmptyModel();
 
     public void delete(T t);
 
     public T update(T t);
 
-    public T read(Long id);
+    public T getById(Long id);
 
-    public List<T> list(int start, int end);
+    List<T> getAll();
+
+    public T getByName(String formulaName);
+
+
+    
 
 }

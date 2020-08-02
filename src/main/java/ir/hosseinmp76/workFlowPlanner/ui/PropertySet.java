@@ -1,24 +1,22 @@
-package ir.hosseinmp76.workFlowPlanner.model;
+package ir.hosseinmp76.workFlowPlanner.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.persistence.Id;
-
-import ir.hosseinmp76.workFlowPlanner.ui.MyTreeItem;
+import ir.hosseinmp76.workFlowPlanner.model.BaseModel;
+import ir.hosseinmp76.workFlowPlanner.model.Property;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
-public class PropertySet implements BaseModel {
+public class PropertySet {
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-
-    @Id
-    Long id;
 
     List<Property> properties;
 
@@ -39,8 +37,9 @@ public class PropertySet implements BaseModel {
 
     }
 
+    @Override
     public String toString() {
-	StringBuilder props = new StringBuilder();
+	final StringBuilder props = new StringBuilder();
 	this.properties.stream().forEach(p -> props.append(p.getName() + ", "));
 	return "PropertySet: [" + props + "]" + "with pririty value = "
 		+ this.sumOfPriorities;

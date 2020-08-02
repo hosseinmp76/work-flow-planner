@@ -34,3 +34,4 @@ out/
 /logs/
 /bin
 /createfix.sql
+/db/
