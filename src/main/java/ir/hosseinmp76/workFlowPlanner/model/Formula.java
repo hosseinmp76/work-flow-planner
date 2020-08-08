@@ -38,4 +38,11 @@ public class Formula implements BaseModel {
 	return this.name + " : ";
 
     }
+
+    public Long getCoefficient(Priority priority) {
+	var res = this.getCoefficients().get(priority);
+	if (res == 0)
+	    return 0L;
+	return res;
+    }
 }

@@ -13,6 +13,7 @@ import org.eclipse.persistence.jpa.PersistenceProvider;
 import ir.hosseinmp76.workFlowPlanner.logic.FormulaMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PriorityMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PropertyMgr;
+import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.persistency.dao.PriorityDAO;
 import ir.hosseinmp76.workFlowPlanner.persistency.jpa.PriorityJpaDAO;
 import ir.hosseinmp76.workFlowPlanner.ui.MyTreeItem;
@@ -28,65 +29,60 @@ public class UIUtills implements Closeable {
     public static UIUtills instance = new UIUtills();
 
     private static List<PropertySet> createLists(
-	    final List<List<MyTreeItem>> pro) {
-	System.out.println("first create " + pro.size());
+	    final List<Property> features) {
 
-	if (pro.size() == 0) {
+	if (features.size() == 0) {
 	    return new ArrayList<>();
 	}
-	if (pro.size() == 1) {
-	    final var rr = pro.get(0).stream()
-		    .map(item -> new PropertySet(item.getValue()))
+	if (features.size() == 1) {
+	    var feature = features.get(0);
+	    var manners = feature.getGrandChildren();
+	    final var rr = manners.stream().map(item -> new PropertySet(item))
 		    .collect(Collectors.toList());
-	    System.out.println("enter createList with size 1 ");
-	    pro.stream().forEach(System.out::println);
-	    rr.stream().forEach(System.out::println);
-	    System.out.println("end createList with size 1 ");
 	    return rr;
 	}
 
-	final var last = pro.get(pro.size() - 1);
+	final var last = features.get(features.size() - 1).getGrandChildren();
 
-	final var temp = UIUtills.createLists(pro.subList(0, pro.size() - 1));
+	final var temp = UIUtills
+		.createLists(features.subList(0, features.size() - 1));
 
 	final List<PropertySet> res = new ArrayList<>();
 	for (final PropertySet propertySet : temp) {
-	    for (final MyTreeItem property : last) {
-		final var t = new PropertySet(property.getValue(),
+	    for (final Property property : last) {
+		final var t = new PropertySet(property,
 			propertySet.getProperties());
 		res.add(t);
 	    }
 	}
-	System.out.println("enter createList with ");
-	pro.stream().forEach(System.out::println);
-	temp.stream().forEach(System.out::println);
-	res.stream().forEach(System.out::println);
-	System.out.println("end createList with ");
 	return res;
 
     }
 
-    public static List<PropertySet> generate(final List<List<MyTreeItem>> pro) {
+    public static List<PropertySet> generate(final List<Property> features) {
 
-	final var res = UIUtills.createLists(pro);
+	final var res = UIUtills.createLists(features);
 
 	final PropertyMgr pmgr = UIUtills.getBean(PropertyMgr.class);
 	final FormulaMgr fmgr = UIUtills.getBean(FormulaMgr.class);
+	final PriorityMgr prioritymgr = UIUtills.getBean(PriorityMgr.class);
+	var formulas = fmgr.getAll();
+	var prioroties = prioritymgr.getAll();
 	res.forEach(ps -> {
-	    final Long[] l = new Long[1];
-	    l[0] = 0L;
-	    ps.getProperties().stream().forEach(prp -> {
+	    formulas.forEach(formula -> {
+		final Long[] l = new Long[1];
+		l[0] = 0L;
+		prioroties.forEach(priority -> {
 
-		// TODO	
-//		pmgr.getAllPropertyPriorities(prp).stream().forEach(pp -> {
-//		    System.out.println("test " + pp.getValue());
-//		    l[0] += pp.getValue();
-//		});
+		    ps.getProperties().stream().forEach(property -> {
+
+			l[0] += formula.getCoefficient(priority)
+				* property.getProportion(priority);
+		    });
+		});
+		ps.getSumOfPriorities().put(formula, l[0]);
 	    });
-	    ps.setSumOfPriorities(l[0]);
 	});
-	res.stream().forEach(System.out::println);
-	System.out.println("end of generate");
 	return res;
 
     }
@@ -99,17 +95,6 @@ public class UIUtills implements Closeable {
 	return UIUtills.instance;
     }
 
-    public static <T, V extends TreeItem<T>> List<V> getLeaves(final V item) {
-	final var leaves = new ArrayList<V>();
-	if (item.isLeaf()) {
-	    leaves.add(item);
-	} else {
-	    ((ObservableList<V>) item.getChildren()).forEach(child -> {
-		leaves.addAll(UIUtills.getLeaves(child));
-	    });
-	}
-	return leaves;
-    }
 
     private SeContainer applicationContext;
 

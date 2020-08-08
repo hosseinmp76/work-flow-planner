@@ -11,9 +11,23 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.ui.PropertySet;
+import javafx.collections.ObservableList;
 
 public class ExportUtils {
+
+    public static List<Property> findFeatures(Property p) {
+	final var leaves = new ArrayList<Property>();
+	if (p.isFeature()) {
+	    leaves.add(p);
+	} else {
+	    p.getChildren().forEach(child -> {
+		leaves.addAll(findFeatures(child));
+	    });
+	}
+	return leaves;
+    }
 
     public static void export(final List<PropertySet> res, File selectedFile) {
 	try {
@@ -29,7 +43,8 @@ public class ExportUtils {
 		res.forEach(ps -> {
 		    try {
 
-			final List record = new ArrayList<>(ps.getProperties());
+			final List<Property> record = new ArrayList<>(
+				ps.getProperties());
 			var properties = ps.getProperties();
 			printer.printRecord(properties);
 		    } catch (final IOException e1) {
