@@ -29,16 +29,13 @@ public class FXMLController {
 
     @FXML
     public void exportButtonHandler(final Event e) {
+
+	var root = propertyMgr.getRoot();
+	var features = ExportUtils.findFeatures(root);
 	final List<List<MyTreeItem>> propertiesValues = new ArrayList<>();
 
-//	this.pr.getRoot().getChildren().forEach(node -> {
-//	    propertiesValues.add(UIUtills.getLeaves((MyTreeItem) node));
-//	});
+	final var res = UIUtills.generate(features);
 
-	final var res = UIUtills.generate(propertiesValues);
-	res.sort((c1,
-		c2) -> (c1.getSumOfPriorities() < c2.getSumOfPriorities() ? 1
-			: -1));
 	final FileChooser fileChooser = new FileChooser();
 
 	final var extension = new FileChooser.ExtensionFilter("csv", "*.csv");

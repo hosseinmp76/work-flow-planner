@@ -1,13 +1,12 @@
 package ir.hosseinmp76.workFlowPlanner.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import ir.hosseinmp76.workFlowPlanner.model.BaseModel;
+import ir.hosseinmp76.workFlowPlanner.model.Formula;
 import ir.hosseinmp76.workFlowPlanner.model.Property;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
@@ -16,11 +15,10 @@ public class PropertySet {
     /**
      *
      */
-    private static final long serialVersionUID = 1L;
 
     List<Property> properties;
 
-    Long sumOfPriorities;
+    Map<Formula, Long> sumOfPriorities = new HashMap<>();
 
     public PropertySet(final Property item) {
 	this.properties = new ArrayList<>();

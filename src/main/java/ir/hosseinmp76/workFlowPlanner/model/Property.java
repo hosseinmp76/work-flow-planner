@@ -47,7 +47,7 @@ public class Property implements BaseModel {
     @OneToMany(mappedBy = "parent")
     private List<Property> children;
 
-    Map<Priority, Long> proportions = new HashMap<>();
+    Map<Priority, Long> proportions = new HashMap<Priority, Long>();
 
     public Property(final Long id) {
 	this.id = id;
@@ -68,14 +68,16 @@ public class Property implements BaseModel {
     }
 
     public List<Property> getGrandChildren() {
-	if (this.children.size() == 0)
-	    return this.getChildren();
+	if (this.children.size() == 0) {
+	  return this.getChildren();
+	}
 	var res = new ArrayList<Property>();
 	this.children.forEach(child -> {
-	    res.addAll(child.getGrandChildren());
+	    var t =child.getGrandChildren();
+	    if(t.size() == 0)
+		t.add(child);
+	    res.addAll(t);
 	});
-	if (res.size() == 0)
-	    return this.getChildren();
 	return res;
     }
 
@@ -83,6 +85,13 @@ public class Property implements BaseModel {
     public String toString() {
 	return this.getName();
 
+    }
+
+    public Long getProportion(Priority priority) {
+	var res = this.getProportions().get(priority);
+	if (res == null)
+	    return 0L;
+	return res;
     }
 
 }
