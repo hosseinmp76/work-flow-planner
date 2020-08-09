@@ -13,6 +13,7 @@ import org.eclipse.persistence.jpa.PersistenceProvider;
 import ir.hosseinmp76.workFlowPlanner.logic.FormulaMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PriorityMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PropertyMgr;
+import ir.hosseinmp76.workFlowPlanner.model.Formula;
 import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.persistency.dao.PriorityDAO;
 import ir.hosseinmp76.workFlowPlanner.persistency.jpa.PriorityJpaDAO;
@@ -59,14 +60,13 @@ public class UIUtills implements Closeable {
 
     }
 
-    public static List<PropertySet> generate(final List<Property> features) {
+    public static List<PropertySet> generate(List<Formula> formulas, final List<Property> features) {
 
 	final var res = UIUtills.createLists(features);
 
 	final PropertyMgr pmgr = UIUtills.getBean(PropertyMgr.class);
-	final FormulaMgr fmgr = UIUtills.getBean(FormulaMgr.class);
 	final PriorityMgr prioritymgr = UIUtills.getBean(PriorityMgr.class);
-	var formulas = fmgr.getAll();
+	
 	var prioroties = prioritymgr.getAll();
 	res.forEach(ps -> {
 	    formulas.forEach(formula -> {

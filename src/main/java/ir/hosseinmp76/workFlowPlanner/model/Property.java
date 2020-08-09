@@ -69,14 +69,15 @@ public class Property implements BaseModel {
 
     public List<Property> getGrandChildren() {
 	if (this.children.size() == 0) {
-	  return this.getChildren();
+	    return this.getChildren();
 	}
 	var res = new ArrayList<Property>();
-	this.children.forEach(child -> {
-	    var t =child.getGrandChildren();
-	    if(t.size() == 0)
-		t.add(child);
-	    res.addAll(t);
+	this.getChildren().forEach(child -> {
+	    var t = child.getGrandChildren();
+	    if (t.size() == 0)
+		res.add(child);
+	    else
+		res.addAll(t);
 	});
 	return res;
     }

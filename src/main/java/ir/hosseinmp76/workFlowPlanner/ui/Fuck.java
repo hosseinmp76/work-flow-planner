@@ -6,6 +6,7 @@ import javafx.application.Platform;
 public class Fuck {
 
     public static void main(final String[] args) {
+	
 	FXApp.main(args);
 	Platform.runLater(new Runnable() {
 	    @Override

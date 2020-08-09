@@ -6,17 +6,21 @@
 	<persistence-unit name="workflowplanner-pu"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>ir.hosseinmp76.workFlowPlanner.model.Property</class>
+		<class>ir.hosseinmp76.workFlowPlanner.model.Formula</class>
+		<class>ir.hosseinmp76.workFlowPlanner.model.Priority</class>
+		
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
 
 			<property name="jakarta.persistence.jdbc.url"
-				value="jdbc:hsqldb:file:./db/testdb:heartsytone;hsqldb.default_table_type=cached;hsqldb.write_delay=false" />
+				value="jdbc:derby:derbyDB;create=true" />
 			<property name="jakarta.persistence.jdbc.user"
 				value="heartstonedbuser" />
 			<property name="jakarta.persistence.jdbc.password" value="" />
 			<property name="jakarta.persistence.jdbc.driver"
-				value="org.hsqldb.jdbcDriver" />
+				value="org.apache.derby.jdbc.EmbeddedDriver" />
 			<property name="eclipselink.ddl-generation"
 				value="create-tables" />
 			<property name="eclipselink.ddl-generation.output-mode"
