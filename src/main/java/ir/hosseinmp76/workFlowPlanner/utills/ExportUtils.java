@@ -6,11 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import ir.hosseinmp76.workFlowPlanner.model.Formula;
 import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.ui.PropertySet;
 import javafx.collections.ObservableList;
@@ -29,7 +31,8 @@ public class ExportUtils {
 	return leaves;
     }
 
-    public static void export(final List<PropertySet> res, File selectedFile) {
+    public static void export(final List<Formula> formulas,
+	    final List<PropertySet> res, File selectedFile) {
 	try {
 	    final FileWriter fileWriter = new FileWriter(selectedFile);
 	    final PrintWriter pw = new PrintWriter(
@@ -38,15 +41,25 @@ public class ExportUtils {
 //		pw.println(p.toString());
 //	    });
 
-	    String[] headers;
+	    if (res.size() == 0)
+		return;
+	    List headers = new ArrayList();
+	    for (int i = 0; i < res.get(0).getProperties().size(); i++) {
+		headers.add("features");
+	    }
+
+	    headers.addAll(formulas);
+
 	    try (CSVPrinter printer = new CSVPrinter(pw, CSVFormat.DEFAULT)) {
+		printer.printRecord(headers);
 		res.forEach(ps -> {
 		    try {
 
-			final List<Property> record = new ArrayList<>(
+			final Collection record = new ArrayList<>(
 				ps.getProperties());
-			var properties = ps.getProperties();
-			printer.printRecord(properties);
+
+			record.addAll(ps.getSumOfPriorities().values());
+			printer.printRecord(record);
 		    } catch (final IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

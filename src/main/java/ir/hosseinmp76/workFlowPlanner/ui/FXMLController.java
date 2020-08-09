@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.hosseinmp76.workFlowPlanner.logic.FormulaMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PriorityMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PropertyMgr;
 import ir.hosseinmp76.workFlowPlanner.utills.ExportUtils;
@@ -34,7 +35,10 @@ public class FXMLController {
 	var features = ExportUtils.findFeatures(root);
 	final List<List<MyTreeItem>> propertiesValues = new ArrayList<>();
 
-	final var res = UIUtills.generate(features);
+	final FormulaMgr fmgr = UIUtills.getBean(FormulaMgr.class);
+
+	var formulas = fmgr.getAll();
+	final var res = UIUtills.generate(formulas, features);
 
 	final FileChooser fileChooser = new FileChooser();
 
@@ -44,7 +48,7 @@ public class FXMLController {
 	final File selectedFile = fileChooser.showSaveDialog(
 		this.exportButton.getParentPopup().getScene().getWindow());
 
-	ExportUtils.export(res, selectedFile);
+	ExportUtils.export(formulas, res, selectedFile);
 
     }
 }

@@ -35,3 +35,5 @@ out/
 /bin
 /createfix.sql
 /db/
+/derby.log
+/olddb/

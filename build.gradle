@@ -42,9 +42,10 @@ javafx {
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+
       google()
   mavenCentral()
+      jcenter()
 }
 
 String javaFxVersion = '14'
@@ -52,7 +53,10 @@ String mod = 'linux'
 
 dependencies {
 // https://mvnrepository.com/artifact/org.hsqldb/hsqldb
-compile group: 'org.hsqldb', name: 'hsqldb', version: '2.5.1'
+//compile group: 'org.hsqldb', name: 'hsqldb', version: '2.5.1'
+
+// https://mvnrepository.com/artifact/org.apache.derby/derby
+compile group: 'org.apache.derby', name: 'derby', version: '10.14.2.0'
 
  	compile "fr.brouillard.oss:cssfx:11.4.0"
     /*
@@ -103,7 +107,7 @@ compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', v
 }
 
 ext {
-    metamodelPath="$buildDir/generated/sources/metamodel/java/main"
+    metamodelPath="$buildDir/generated/sources/metamodel/main/java"
     persistenceXMLLocation="src/main/resources/META-INF/persistence.xml"
 }
 
@@ -113,6 +117,7 @@ compileJava {
         file(metamodelPath).mkdirs()
     }
     options.compilerArgs += ["-Aeclipselink.persistencexml=${new File(project.projectDir, persistenceXMLLocation).absolutePath}", '-s', metamodelPath]
+    
 }
 
 mainClassName = 'ir.hosseinmp76.workFlowPlanner.ui.Fuck'
@@ -150,16 +155,29 @@ task copyResources2(type: Copy) {
 
 processResources.dependsOn copyResources2
 
+
+eclipse {
+	classpath {
+		downloadSources = true
+	    downloadJavadoc = true
+	}
+}
+
 sourceSets {
+// main.java.srcDir metamodelPath
     main {
         java {
             resources {
                 srcDir("src/main/resources")
                 include("**/*.*")
+                
             }
+        //    include '$buildDir/generated/sources/metamodel/main/java/*'
         }
     }
 }
+
+sourceSets.main.java.srcDir "src/main/conf"
 
 run {
     jvmArgs '-cp', 'src/main/resources'
