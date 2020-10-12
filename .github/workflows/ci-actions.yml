@@ -25,8 +25,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
-      - run: ./gradlew runtime
+      - run: ./gradlew runtimeZip
       - uses: actions/upload-artifact@v2
         with:
           name: my-artifact ${{ matrix.os }}
-          path: build/image
+          path: build/image.zip
