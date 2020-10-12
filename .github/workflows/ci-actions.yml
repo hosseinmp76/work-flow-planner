@@ -2,12 +2,12 @@ name: Java CI
 
 on:
 	push:
-		  branches:
-		    - master
-		    - github
+	  branches:
+	    - master
+	    - github
   pull_request:
-	    branches:
-	      - main
+    branches:
+      - main
 
 jobs:
   build:
