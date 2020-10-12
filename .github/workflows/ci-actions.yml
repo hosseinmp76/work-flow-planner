@@ -21,7 +21,7 @@ jobs:
       - run: ./gradlew runtime
       - uses: actions/upload-artifact@v2
         with:
-          name: Package
+          name: windows
           path: build/image
   job_2:
     runs-on: ubuntu-latest
@@ -41,5 +41,5 @@ jobs:
       - run: ./gradlew runtime
       - uses: actions/upload-artifact@v2
         with:
-          name: Package
+          name: ubuntu
           path: build/image
