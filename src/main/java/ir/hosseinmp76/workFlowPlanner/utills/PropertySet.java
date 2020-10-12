@@ -1,4 +1,4 @@
-package ir.hosseinmp76.workFlowPlanner.ui;
+package ir.hosseinmp76.workFlowPlanner.utills;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,15 +20,8 @@ public class PropertySet {
 
     Map<Formula, Long> sumOfPriorities = new HashMap<>();
 
-    public PropertySet(final Property item) {
+    public PropertySet(final List<Property> properties2) {
 	this.properties = new ArrayList<>();
-	this.properties.add(item);
-    }
-
-    public PropertySet(final Property property,
-	    final List<Property> properties2) {
-	this.properties = new ArrayList<>();
-	this.properties.add(property);
 	for (final Property property2 : properties2) {
 	    this.properties.add(property2);
 	}
@@ -42,4 +35,6 @@ public class PropertySet {
 	return "PropertySet: [" + props + "]" + "with pririty value = "
 		+ this.sumOfPriorities;
     }
+
+   
 }

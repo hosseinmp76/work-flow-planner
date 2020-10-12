@@ -41,7 +41,7 @@ public class Formula implements BaseModel {
 
     public Long getCoefficient(Priority priority) {
 	var res = this.getCoefficients().get(priority);
-	if (res == 0)
+	if (res == null)
 	    return 0L;
 	return res;
     }

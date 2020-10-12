@@ -9,7 +9,7 @@
 		<class>ir.hosseinmp76.workFlowPlanner.model.Property</class>
 		<class>ir.hosseinmp76.workFlowPlanner.model.Formula</class>
 		<class>ir.hosseinmp76.workFlowPlanner.model.Priority</class>
-		
+
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
@@ -21,26 +21,21 @@
 			<property name="jakarta.persistence.jdbc.password" value="" />
 			<property name="jakarta.persistence.jdbc.driver"
 				value="org.apache.derby.jdbc.EmbeddedDriver" />
-			<property name="eclipselink.ddl-generation"
-				value="create-tables" />
-			<property name="eclipselink.ddl-generation.output-mode"
-				value="database" />
-			<property
-				name="jakarta.persistence.schema-generation.scripts.action"
-				value="drop-and-create" />
-			<property
-				name="jakarta.persistence.schema-generation.scripts.create-target"
-				value="./db/sql/create.sql" />
-			<property
-				name="jakarta.persistence.schema-generation.scripts.drop-target"
-				value="./db/sql/drop.sql" />
 
-			<property
-				name="jakarta.persistence.schema-generation.create-database-schemas"
-				value="true" />
-				
-				 <property name="eclipselink.logging.level.sql" value="FINE"/>
- <property name="eclipselink.logging.parameters" value="true"/>
+			<!-- <property name="jakarta.persistence.schema-generation.scripts.action" 
+				value="drop-and-create" /> <property name="jakarta.persistence.schema-generation.create-database-schemas" 
+				value="false" /> <property name="jakarta.persistence.schema-generation.database.action" 
+				value="create" /> <property name="eclipselink.ddl-generation" value="create-tables" 
+				/> <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc" 
+				/> <property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc" 
+				/> <property name="eclipselink.ddl-generation.output-mode" value="both" /> -->
+			<property name="eclipselink.ddl-generation"
+				value="create-or-extend-tables" />
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+
+			<property name="eclipselink.logging.level.sql" value="FINE" />
+			<property name="eclipselink.logging.parameters" value="true" />
+			<!--property name="eclipselink.logging.level" value="FINEST"/ -->
 
 
 		</properties>

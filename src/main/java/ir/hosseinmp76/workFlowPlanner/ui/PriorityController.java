@@ -166,8 +166,15 @@ public class PriorityController {
 	if (forula == null) {
 	    return;
 	}
-	this.removeFormulaCombo.getItems().remove(forula);
+	
 	this.formulaMgr.delete(forula);
+	this.removeFormulaCombo.getItems().remove(forula);
+	var index =this.priorityTable.getColumns().stream().filter(col ->{
+	    if(col.getText().equals(forula.getName()))
+		return true;
+	    return false;
+	}).findAny().get();
+	this.priorityTable.getColumns().remove(index);
 
     }
 
@@ -177,8 +184,10 @@ public class PriorityController {
 	if (priority == null) {
 	    return;
 	}
-	this.removePriorityConboBox.getItems().remove(priority);
+	
 	this.priorityMgr.delete(priority);
+	this.priorityTable.getItems().remove(priority);
+	this.removePriorityConboBox.getItems().remove(priority);
 
     }
 

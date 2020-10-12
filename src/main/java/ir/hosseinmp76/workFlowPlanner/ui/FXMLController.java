@@ -31,24 +31,22 @@ public class FXMLController {
     @FXML
     public void exportButtonHandler(final Event e) {
 
-	var root = propertyMgr.getRoot();
-	var features = ExportUtils.findFeatures(root);
-	final List<List<MyTreeItem>> propertiesValues = new ArrayList<>();
-
-	final FormulaMgr fmgr = UIUtills.getBean(FormulaMgr.class);
-
-	var formulas = fmgr.getAll();
-	final var res = UIUtills.generate(formulas, features);
+	
 
 	final FileChooser fileChooser = new FileChooser();
 
 	final var extension = new FileChooser.ExtensionFilter("csv", "*.csv");
-	fileChooser.getExtensionFilters().add(extension);
-	fileChooser.setSelectedExtensionFilter(extension);
-	final File selectedFile = fileChooser.showSaveDialog(
+//	fileChooser.getExtensionFilters().add(extension);
+//	fileChooser.setSelectedExtensionFilter(extension);
+	File selectedFile = fileChooser.showSaveDialog(
 		this.exportButton.getParentPopup().getScene().getWindow());
 
-	ExportUtils.export(formulas, res, selectedFile);
+	if (!selectedFile.getName().endsWith(".csv")) {
+	    selectedFile = new File(selectedFile.getAbsolutePath() + ".csv");
+
+	}
+	
+	ExportUtils.export(selectedFile);
 
     }
 }

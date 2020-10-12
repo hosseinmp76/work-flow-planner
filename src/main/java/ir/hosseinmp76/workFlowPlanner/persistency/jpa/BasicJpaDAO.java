@@ -18,9 +18,12 @@ public abstract class BasicJpaDAO<T extends BaseModel> implements BasicDAO<T> {
     EntityManagerProvider emf;
 
     @Override
-    public void delete(final T t) {
+    public void delete(T t) {
 	final EntityManager em = this.emf.getEntityManager();
 	em.getTransaction().begin();
+	if (!em.contains(t)) {
+	    t = em.merge(t);
+	}
 	em.remove(t);
 	em.getTransaction().commit();
     }
