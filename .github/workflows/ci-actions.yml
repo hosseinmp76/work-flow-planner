@@ -28,5 +28,5 @@ jobs:
       - run: ./gradlew runtime
       - uses: actions/upload-artifact@v2
         with:
-          name: my-artifact ${{ matrix.node-version }}
-          path: ${{ github.workspace }}
+          name: my-artifact ${{ matrix.os }}
+          path: build/image
