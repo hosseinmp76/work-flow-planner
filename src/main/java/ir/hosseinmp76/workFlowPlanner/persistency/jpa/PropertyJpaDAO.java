@@ -20,10 +20,32 @@ public class PropertyJpaDAO extends BasicJpaDAO<Property>
     public Property create(final String name, final Property dadProperty) {
 	final var res = new Property();
 	res.setParent(dadProperty);
+
 	res.setName(name);
 	res.setFeature(false);
 	this.persist(res);
+	if (dadProperty != null && !dadProperty.getChildren().contains(res)) {
+	    dadProperty.getChildren().add(res);
+	    this.update(dadProperty);
+	}
 	return res;
+    }
+
+    // fuck this shit
+    @Override
+    public void delete(Property t) {
+	for (Property child : t.getChildren()) {
+	    this.delete(child);
+	}
+
+	final EntityManager em = this.emf.getEntityManager();
+	em.getTransaction().begin();
+	if (!em.contains(t)) {
+	    t = em.merge(t);
+	}
+
+	em.remove(t);
+	em.getTransaction().commit();
     }
 
     @Override

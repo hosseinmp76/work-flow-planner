@@ -46,23 +46,20 @@ public class PropertyController {
     @FXML
     private TreeView<Property> tree;
 
-    @FXML
-    Button add;
-
-    @FXML
-    Label detail;
+//    @FXML
+//    Label detail;
 
     @FXML
     TextField name;
 
-    @FXML
-    TableView<Priority> table;
+//    @FXML
+//    TableView<Priority> table;
 
-    @FXML
-    TableColumn<Priority, Priority> column1;
-
-    @FXML
-    TableColumn<Priority, Priority> column2;
+//    @FXML
+//    TableColumn<Priority, Priority> column1;
+//
+//    @FXML
+//    TableColumn<Priority, Priority> column2;
 
     @FXML
     VBox mainBox;
@@ -75,6 +72,9 @@ public class PropertyController {
 
     @FXML
     CheckBox isFeature;
+
+    @FXML
+    Button updatePPBut;
 
     @FXML
     public void addButt(final Event e) {
@@ -153,6 +153,22 @@ public class PropertyController {
     }
 
     @FXML
+    public void removePropertyBut(final Event e) {
+	Property property = this.getSelectedProperty().getValue();
+	this.propertyMgr.delete(property);
+	this.getSelectedProperty().getParent().getChildren()
+		.remove(this.getSelectedProperty());
+	this.tree.refresh();
+    }
+
+//    private void updatePriorityTable(final Property property) {
+//	final var pp = property.getProportions();
+//	this.table.getItems().clear();
+//	this.table.getItems().addAll(pp.keySet());
+//
+//    }
+
+    @FXML
     public void updatePP(final Event e) {
 	Property property = this.getSelectedProperty().getValue();
 	if (property.isFeature() == false)
@@ -169,13 +185,6 @@ public class PropertyController {
 	}
     }
 
-    private void updatePriorityTable(final Property property) {
-	final var pp = property.getProportions();
-	this.table.getItems().clear();
-	this.table.getItems().addAll(pp.keySet());
-
-    }
-
     private void updateSelectedProperty(
 	    final ObservableValue<? extends TreeItem<Property>> observable,
 	    final TreeItem<Property> oldValue,
@@ -183,11 +192,14 @@ public class PropertyController {
 	if (oldValue == newValue) {
 	    return;
 	}
-	this.detail.setText(newValue.toString());
-	this.updatePriorityTable(newValue.getValue());
+
+//	this.detail.setText(newValue.toString());
+//	this.updatePriorityTable(newValue.getValue());
 	this.detailPane.setDisable(false);
 	this.propertyName.setText(newValue.getValue().getName());
 	this.isFeature.setSelected(newValue.getValue().isFeature());
+
+	updatePPBut.setDisable(!newValue.getValue().isFeature());
 
     }
 

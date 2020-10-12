@@ -14,11 +14,11 @@ import ir.hosseinmp76.workFlowPlanner.logic.FormulaMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PriorityMgr;
 import ir.hosseinmp76.workFlowPlanner.logic.PropertyMgr;
 import ir.hosseinmp76.workFlowPlanner.model.Formula;
+import ir.hosseinmp76.workFlowPlanner.model.Priority;
 import ir.hosseinmp76.workFlowPlanner.model.Property;
 import ir.hosseinmp76.workFlowPlanner.persistency.dao.PriorityDAO;
 import ir.hosseinmp76.workFlowPlanner.persistency.jpa.PriorityJpaDAO;
 import ir.hosseinmp76.workFlowPlanner.ui.MyTreeItem;
-import ir.hosseinmp76.workFlowPlanner.ui.PropertySet;
 import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 import jakarta.persistence.Persistence;
@@ -38,9 +38,10 @@ public class UIUtills implements Closeable {
 	if (features.size() == 1) {
 	    var feature = features.get(0);
 	    var manners = feature.getGrandChildren();
-	    final var rr = manners.stream().map(item -> new PropertySet(item))
+	    final var res = manners.stream()
+		    .map(item -> new PropertySet(List.of(item)))
 		    .collect(Collectors.toList());
-	    return rr;
+	    return res;
 	}
 
 	final var last = features.get(features.size() - 1).getGrandChildren();
@@ -51,35 +52,40 @@ public class UIUtills implements Closeable {
 	final List<PropertySet> res = new ArrayList<>();
 	for (final PropertySet propertySet : temp) {
 	    for (final Property property : last) {
-		final var t = new PropertySet(property,
-			propertySet.getProperties());
-		res.add(t);
+		var t = new ArrayList();
+		t.addAll(propertySet.getProperties());
+		t.add(property);
+		final var tp = new PropertySet(t);
+		res.add(tp);
 	    }
 	}
 	return res;
 
     }
 
-    public static List<PropertySet> generate(List<Formula> formulas, final List<Property> features) {
+    public static List<PropertySet> generate(List<Formula> formulas,
+	    final List<Property> features) {
 
 	final var res = UIUtills.createLists(features);
 
 	final PropertyMgr pmgr = UIUtills.getBean(PropertyMgr.class);
 	final PriorityMgr prioritymgr = UIUtills.getBean(PriorityMgr.class);
-	
+
 	var prioroties = prioritymgr.getAll();
 	res.forEach(ps -> {
 	    formulas.forEach(formula -> {
 		final Long[] l = new Long[1];
 		l[0] = 0L;
-		prioroties.forEach(priority -> {
+		for (Priority priority : prioroties) {
 
-		    ps.getProperties().stream().forEach(property -> {
+		    for (Property property : ps.getProperties()) {
 
-			l[0] += formula.getCoefficient(priority)
+			var tt = formula.getCoefficient(priority)
 				* property.getProportion(priority);
-		    });
-		});
+			l[0] +=  tt;
+		    }
+
+		}
 		ps.getSumOfPriorities().put(formula, l[0]);
 	    });
 	});
@@ -94,7 +100,6 @@ public class UIUtills implements Closeable {
     public static UIUtills getInstance() {
 	return UIUtills.instance;
     }
-
 
     private SeContainer applicationContext;
 

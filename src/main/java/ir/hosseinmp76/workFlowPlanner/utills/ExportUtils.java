@@ -7,14 +7,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import ir.hosseinmp76.workFlowPlanner.logic.FormulaMgr;
+import ir.hosseinmp76.workFlowPlanner.logic.PropertyMgr;
 import ir.hosseinmp76.workFlowPlanner.model.Formula;
 import ir.hosseinmp76.workFlowPlanner.model.Property;
-import ir.hosseinmp76.workFlowPlanner.ui.PropertySet;
+import ir.hosseinmp76.workFlowPlanner.ui.MyTreeItem;
 import javafx.collections.ObservableList;
 
 public class ExportUtils {
@@ -31,24 +36,29 @@ public class ExportUtils {
 	return leaves;
     }
 
-    public static void export(final List<Formula> formulas,
-	    final List<PropertySet> res, File selectedFile) {
+    public static void export(File selectedFile) {
+	var root = UIUtills.getBean(PropertyMgr.class).getRoot();
+
+	var features = ExportUtils.findFeatures(root);
+
+	final FormulaMgr fmgr = UIUtills.getBean(FormulaMgr.class);
+
+	var formulas = fmgr.getAll();
+	final var res = UIUtills.generate(formulas, features);
 	try {
 	    final FileWriter fileWriter = new FileWriter(selectedFile);
 	    final PrintWriter pw = new PrintWriter(
 		    new BufferedWriter(fileWriter));
-//	    res.forEach(p -> {
-//		pw.println(p.toString());
-//	    });
 
 	    if (res.size() == 0)
 		return;
 	    List headers = new ArrayList();
-	    for (int i = 0; i < res.get(0).getProperties().size(); i++) {
-		headers.add("features");
+	    for (Property feature : features) {
+		headers.add(feature.getName());
 	    }
-
-	    headers.addAll(formulas);
+	    for (Formula formul : formulas) {
+		headers.add(formul.getName());
+	    }
 
 	    try (CSVPrinter printer = new CSVPrinter(pw, CSVFormat.DEFAULT)) {
 		printer.printRecord(headers);
@@ -57,11 +67,14 @@ public class ExportUtils {
 
 			final Collection record = new ArrayList<>(
 				ps.getProperties());
+			for (Formula formul : formulas) {
+//			     Map<Formula, Long> sumOfPriorities = new HashMap<>();
+//			     sumOfPriorities.get(formul)
+			    record.add(ps.getSumOfPriorities().get(formul));
+			}
 
-			record.addAll(ps.getSumOfPriorities().values());
 			printer.printRecord(record);
 		    } catch (final IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		    }
 
